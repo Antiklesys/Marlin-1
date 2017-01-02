@@ -2907,9 +2907,9 @@ void process_commands()
             SET_OUTPUT(BEEPER);
 
             WRITE(BEEPER,HIGH);
-            delay(3);
+            delay(2);
             WRITE(BEEPER,LOW);
-            delay(3);
+            delay(5);
           #else
 			#if !defined(LCD_FEEDBACK_FREQUENCY_HZ) || !defined(LCD_FEEDBACK_FREQUENCY_DURATION_MS)
               lcd_buzz(1000/6,100);
