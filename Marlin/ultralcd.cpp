@@ -310,6 +310,9 @@ static void lcd_main_menu()
                 MENU_ITEM(function, MSG_PAUSE_PRINT, lcd_sdcard_pause);
             else
                 MENU_ITEM(function, MSG_RESUME_PRINT, lcd_sdcard_resume);
+			#ifdef FILAMENTCHANGEENABLE
+				MENU_ITEM(gcode, MSG_FILAMENTCHANGE, PSTR("M600"));
+			#endif
             MENU_ITEM(function, MSG_STOP_PRINT, lcd_sdcard_stop);
         }else{
             MENU_ITEM(submenu, MSG_CARD_MENU, lcd_sdcard_menu);
@@ -437,9 +440,6 @@ static void lcd_tune_menu()
       MENU_ITEM(submenu, MSG_BABYSTEP_Y, lcd_babystep_y);
     #endif //BABYSTEP_XY
     MENU_ITEM(submenu, MSG_BABYSTEP_Z, lcd_babystep_z);
-#endif
-#ifdef FILAMENTCHANGEENABLE
-     MENU_ITEM(gcode, MSG_FILAMENTCHANGE, PSTR("M600"));
 #endif
     END_MENU();
 }
