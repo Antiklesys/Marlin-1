@@ -1295,7 +1295,6 @@
 #else
 	#define Z_MIN_PIN 30
 #endif
-#define Z_MIN_PIN 30
 #define Z_MAX_PIN 32
 #define Z_ENABLE_PIN 35
 
