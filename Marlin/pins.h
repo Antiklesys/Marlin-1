@@ -1290,6 +1290,11 @@
 
 #define Z_STEP_PIN 37
 #define Z_DIR_PIN 39
+#ifdef ENABLE_AUTO_BED_LEVELING
+	#define Z_MIN_PIN 30
+#else
+	#define Z_MIN_PIN 30
+#endif
 #define Z_MIN_PIN 30
 #define Z_MAX_PIN 32
 #define Z_ENABLE_PIN 35
