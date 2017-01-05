@@ -307,12 +307,13 @@ static void lcd_main_menu()
         if (card.isFileOpen())
         {
             if (card.sdprinting)
-                MENU_ITEM(function, MSG_PAUSE_PRINT, lcd_sdcard_pause);
-            else
-                MENU_ITEM(function, MSG_RESUME_PRINT, lcd_sdcard_resume);
-			#ifdef FILAMENTCHANGEENABLE
+				#ifdef FILAMENTCHANGEENABLE
 				MENU_ITEM(gcode, MSG_FILAMENTCHANGE, PSTR("M600"));
-			#endif
+				#else
+                MENU_ITEM(function, MSG_PAUSE_PRINT, lcd_sdcard_pause);
+				else
+                MENU_ITEM(function, MSG_RESUME_PRINT, lcd_sdcard_resume);
+				#endif
             MENU_ITEM(function, MSG_STOP_PRINT, lcd_sdcard_stop);
         }else{
             MENU_ITEM(submenu, MSG_CARD_MENU, lcd_sdcard_menu);
