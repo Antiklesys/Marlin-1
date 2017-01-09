@@ -105,6 +105,12 @@ uint8_t const SD_CARD_ERROR_SCK_RATE = 0X18;
 uint8_t const SD_CARD_ERROR_INIT_NOT_CALLED = 0X19;
 /** crc check error */
 uint8_t const SD_CARD_ERROR_CRC = 0X20;
+
+/** Toshiba FlashAir: iSDIO */
+uint8_t const SD_CARD_ERROR_CMD48 = 0x80;
+/** Toshiba FlashAir: iSDIO */
+uint8_t const SD_CARD_ERROR_CMD49 = 0x81;
+
 //------------------------------------------------------------------------------
 // card types
 /** Standard capacity V1 SD card */
