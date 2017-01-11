@@ -601,6 +601,14 @@ static void lcd_home()
 }
 #endif
 
+#ifdef ENABLE_AUTO_BED_LEVELING
+static void bed_leveling()
+{
+	enquecommand_P(PSTR("G28 X0 Y0"));
+    enquecommand_P(PSTR("G29"));
+}
+#endif
+
 static void laser_home()
 {
     enquecommand_P(PSTR("G28 X0 Y0"));
@@ -673,7 +681,7 @@ static void homeAndParkHeadForCenterAdjustment()
 	homeAndParkHeadForCenterAdjustment2();
 }
 
-static void bed_leveling2()
+static void bed_leveling3()
 {	
     enquecommand_P(PSTR("G28 Z0"));
     char buffer[32];
