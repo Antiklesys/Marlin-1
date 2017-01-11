@@ -601,14 +601,6 @@ static void lcd_home()
 }
 #endif
 
-#ifdef ENABLE_AUTO_BED_LEVELING
-static void bed_leveling()
-{
-	enquecommand_P(PSTR("G28 X0 Y0"));
-    enquecommand_P(PSTR("G29"));
-}
-#endif
-
 static void laser_home()
 {
     enquecommand_P(PSTR("G28 X0 Y0"));
@@ -681,16 +673,21 @@ static void homeAndParkHeadForCenterAdjustment()
 	homeAndParkHeadForCenterAdjustment2();
 }
 
-static void bed_leveling3()
-{	
+static void bed_leveling()
+{
+#ifdef ENABLE_AUTO_BED_LEVELING
+	enquecommand_P(PSTR("G28 X0 Y0"));
+    enquecommand_P(PSTR("G29"));
+#else	
     enquecommand_P(PSTR("G28 Z0"));
     char buffer[32];
     sprintf_P(buffer, PSTR("G1 F%i Z%i"), int(homing_feedrate[0]), 35);
     enquecommand(buffer);
 	homeAndParkHeadForCenterAdjustment();
+#endif
 }
 
-static void bed_leveling()
+static void bed_leveling_old()
 {
 	
 enquecommand_P(PSTR("G21"));
@@ -735,7 +732,7 @@ static void lcd_prepare_menu()
       MENU_ITEM(function, MSG_AUTOSTART, lcd_autostart_sd);
     #endif
 #endif
-	MENU_ITEM(function, MSG_BED_LEVEL, bed_leveling2);
+	MENU_ITEM(function, MSG_BED_LEVEL, bed_leveling);
     MENU_ITEM(function, MSG_LASER_HOME, laser_home);
 	MENU_ITEM(gcode, MSG_LASER_XYHOME, PSTR("G28 X0 Y0"));
     MENU_ITEM(gcode, MSG_DISABLE_STEPPERS, PSTR("M84"));
