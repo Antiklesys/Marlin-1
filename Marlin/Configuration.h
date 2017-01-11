@@ -421,6 +421,12 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
   #define FILAMENT_RUNOUT_SCRIPT "M600"
 #endif
 
+// FLASH_AIR_WIFI must be defined if a Toshiba FlashAir card's WiFi is used.
+// The FlashAir card will broadcast approx 6 seconds after Mounting.
+// If a WiFi link is not established within 1 minute the FlashAir's WiFi will
+// hibernate (must re-Mount card to retry WiFi linking).
+#define FLASH_AIR_WIFI // Uncomment this if Toshiba FlashAir WiFi is used.
+
 //============================= Bed Auto Leveling ===========================
 
 //#define ENABLE_AUTO_BED_LEVELING // Delete the comment to enable (remove // at the start of the line)
