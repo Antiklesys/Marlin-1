@@ -462,27 +462,30 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
     // is used to esimate the plane of the print bed
 
       #define ABL_PROBE_PT_1_X 15
-      #define ABL_PROBE_PT_1_Y 180
-      #define ABL_PROBE_PT_2_X 15
-      #define ABL_PROBE_PT_2_Y 20
-      #define ABL_PROBE_PT_3_X 170
-      #define ABL_PROBE_PT_3_Y 20
+      #define ABL_PROBE_PT_1_Y 70
+	  
+      #define ABL_PROBE_PT_2_X 80
+      #define ABL_PROBE_PT_2_Y 180
+	  
+      #define ABL_PROBE_PT_3_X 180
+      #define ABL_PROBE_PT_3_Y 70
 
   #endif // AUTO_BED_LEVELING_GRID
 
 
   // these are the offsets to the probe relative to the extruder tip (Hotend - Probe)
-  #define X_PROBE_OFFSET_FROM_EXTRUDER -40
-  #define Y_PROBE_OFFSET_FROM_EXTRUDER -0
-  #define Z_PROBE_OFFSET_FROM_EXTRUDER -2
+  //+ indicates towards the back of the Ultimaker / - indicates towards the front of the Ultimaker
+  #define X_PROBE_OFFSET_FROM_EXTRUDER -0
+  #define Y_PROBE_OFFSET_FROM_EXTRUDER +40
+  #define Z_PROBE_OFFSET_FROM_EXTRUDER -1
 
   //#define Z_RAISE_BEFORE_HOMING 5       // (in mm) Raise Z before homing (G28) for Probe Clearance.
                                         // Be sure you have this distance over your Z_MAX_POS in case
 
   #define XY_TRAVEL_SPEED 3000         // X and Y axis travel speed between probes, in mm/min
 
-  #define Z_RAISE_BEFORE_PROBING 15    //How much the extruder will be raised before traveling to the first probing point.
-  #define Z_RAISE_BETWEEN_PROBINGS 5  //How much the extruder will be raised when traveling from between next probing points
+  #define Z_RAISE_BEFORE_PROBING 10    //How much the extruder will be raised before traveling to the first probing point.
+  #define Z_RAISE_BETWEEN_PROBINGS 10  //How much the extruder will be raised when traveling from between next probing points
 
 
   //If defined, the Probe servo will be turned on only during movement and then turned off to avoid jerk
