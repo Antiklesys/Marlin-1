@@ -468,12 +468,12 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
     // is used to esimate the plane of the print bed
 
       #define ABL_PROBE_PT_1_X 15
-      #define ABL_PROBE_PT_1_Y 70
+      #define ABL_PROBE_PT_1_Y 50
 	  
       #define ABL_PROBE_PT_2_X 80
-      #define ABL_PROBE_PT_2_Y 180
+      #define ABL_PROBE_PT_2_Y 185
 	  
-      #define ABL_PROBE_PT_3_X 180
+      #define ABL_PROBE_PT_3_X 185
       #define ABL_PROBE_PT_3_Y 70
 
   #endif // AUTO_BED_LEVELING_GRID
@@ -481,8 +481,8 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 
   // these are the offsets to the probe relative to the extruder tip (Hotend - Probe)
   //+ indicates towards the back of the Ultimaker / - indicates towards the front of the Ultimaker
-  #define X_PROBE_OFFSET_FROM_EXTRUDER 5
-  #define Y_PROBE_OFFSET_FROM_EXTRUDER 40
+  #define X_PROBE_OFFSET_FROM_EXTRUDER 10
+  #define Y_PROBE_OFFSET_FROM_EXTRUDER 30
   #define Z_PROBE_OFFSET_FROM_EXTRUDER 0
 
   //#define Z_RAISE_BEFORE_HOMING 5       // (in mm) Raise Z before homing (G28) for Probe Clearance.
