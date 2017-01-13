@@ -429,7 +429,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 
 //============================= Bed Auto Leveling ===========================
 
-#define ENABLE_AUTO_BED_LEVELING // Delete the comment to enable (remove // at the start of the line)
+//#define ENABLE_AUTO_BED_LEVELING // Delete the comment to enable (remove // at the start of the line)
 
 #ifdef ENABLE_AUTO_BED_LEVELING
 
@@ -467,23 +467,42 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
     // with no grid, just probe 3 arbitrary points.  A simple cross-product
     // is used to esimate the plane of the print bed
 
-      #define ABL_PROBE_PT_1_X 15
-      #define ABL_PROBE_PT_1_Y 50
+      #define ABL_PROBE_PT_1_X 185
+      #define ABL_PROBE_PT_1_Y 70
 	  
       #define ABL_PROBE_PT_2_X 80
       #define ABL_PROBE_PT_2_Y 185
 	  
-      #define ABL_PROBE_PT_3_X 185
-      #define ABL_PROBE_PT_3_Y 70
+      #define ABL_PROBE_PT_3_X 15
+      #define ABL_PROBE_PT_3_Y 50
 
   #endif // AUTO_BED_LEVELING_GRID
 
 
-  // these are the offsets to the probe relative to the extruder tip (Hotend - Probe)
-  //+ indicates towards the back of the Ultimaker / - indicates towards the front of the Ultimaker
-  #define X_PROBE_OFFSET_FROM_EXTRUDER 10
-  #define Y_PROBE_OFFSET_FROM_EXTRUDER 30
-  #define Z_PROBE_OFFSET_FROM_EXTRUDER 0
+   // these are the offsets to the probe relative to the extruder tip (Hotend - Probe)
+   // Z Probe to nozzle (X,Y) offset, relative to (0, 0).
+   // X and Y offsets must be integers. !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+   //
+   // In the following example the X and Y offsets are both positive:
+   // #define X_PROBE_OFFSET_FROM_EXTRUDER 10
+   // #define Y_PROBE_OFFSET_FROM_EXTRUDER 10
+   //
+   //    +-- BACK ---+
+   //    |           |
+   //  L |    (+) P  | R <-- probe (20,20)
+   //  E |           | I
+   //  F | (-) N (+) | G <-- nozzle (10,10)
+   //  T |           | H
+   //    |    (-)    | T
+   //    |           |
+   //    O-- FRONT --+
+   //  (0,0)
+
+   #define X_PROBE_OFFSET_FROM_EXTRUDER 10 // X offset: -left  +right  [of the nozzle]
+   #define Y_PROBE_OFFSET_FROM_EXTRUDER 30  // Y offset: -front +behind [the nozzle]
+   #define Z_PROBE_OFFSET_FROM_EXTRUDER 0  // Z offset: -below +above  [the nozzle]
+  
+
 
   //#define Z_RAISE_BEFORE_HOMING 5       // (in mm) Raise Z before homing (G28) for Probe Clearance.
                                         // Be sure you have this distance over your Z_MAX_POS in case
