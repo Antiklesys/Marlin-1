@@ -834,10 +834,11 @@ static void lcd_prepare_menu()
     }
 #endif
     MENU_ITEM(submenu, MSG_MOVE_AXIS, lcd_move_menu);
-    END_MENU();
 #ifdef UMO_BOTTOM_Z_STOP_MOD
-	MENU_ITEM(submenu, "Realign Z Offset", lcd_init_z_adjustment);
+	MENU_ITEM(submenu, MSG_REALIGN_Z_OFFSET, lcd_init_z_adjustment);
 #endif
+    END_MENU();
+
 }
 
 float move_menu_scale;
