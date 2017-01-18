@@ -374,8 +374,8 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 //Uncomment the following define if you're using only the bottom Z end-stop as per Neotko's mod on Ultimaker
 //https://ultimaker.com/en/community/22120-idea-new-location-for-z-limit-on-umo
 
-//#define UMO_BOTTOM_Z_STOP_MOD
-
+#define UMO_BOTTOM_Z_STOP_MOD
+#define LCD_TIMEOUT_TO_STATUS 70000
 #define X_HOME_DIR -1
 #define Y_HOME_DIR -1
 #ifdef UMO_BOTTOM_Z_STOP_MOD

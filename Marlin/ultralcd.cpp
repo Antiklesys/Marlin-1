@@ -87,12 +87,16 @@ static void lcd_sdcard_menu();
 #ifdef ACTION_COMMAND
 static void lcd_action_menu();
 #endif
-
+static void point1BedAdjustment();
+static void point2BedAdjustment();
+static void point3BedAdjustment();
 #ifdef UMO_BOTTOM_Z_STOP_MOD
 static void lcd_init_z_adjustment();
 static void lcd_prepare_info_z();
 static void lcd_prepare_adjust_z();
 #endif
+
+
 
 static void lcd_quick_feedback();//Cause an LCD refresh, and give the user visual or audible feedback that something has happened
 
@@ -614,70 +618,7 @@ static void laser_home()
     enquecommand_P(PSTR("G1 Z85 F12000"));
 }
 
-static void parkHeadForCenterAdjustment()
-{
-    char buffer[32];
-    sprintf_P(buffer, PSTR("G1 F%i Z5"), int(homing_feedrate[Z_AXIS]));
-    enquecommand(buffer);
-    sprintf_P(buffer, PSTR("G1 F%i X%i Y%i"), int(homing_feedrate[X_AXIS]), X_MAX_LENGTH / 2, BED_CENTER_ADJUST_Y);
-    enquecommand(buffer);
-    sprintf_P(buffer, PSTR("G1 F%i Z0"), int(homing_feedrate[Z_AXIS]));
-    enquecommand(buffer);
-}
-
-static void parkHeadForRightAdjustment()
-{
-    char buffer[32];
-    sprintf_P(buffer, PSTR("G1 F%i Z5"), int(homing_feedrate[Z_AXIS]));
-    enquecommand(buffer);
-    sprintf_P(buffer, PSTR("G1 F%i X%i Y%i"), int(homing_feedrate[X_AXIS]), BED_RIGHT_ADJUST_X, BED_RIGHT_ADJUST_Y);
-    enquecommand(buffer);
-    sprintf_P(buffer, PSTR("G1 F%i Z0"), int(homing_feedrate[Z_AXIS]));
-    enquecommand(buffer);	
-	parkHeadForCenterAdjustment();
-}
-
-static void parkHeadForLeftAdjustment()
-{
-   // add_homeing[Z_AXIS] -= current_position[Z_AXIS];
-    //current_position[Z_AXIS] = 0;
-    //plan_set_position(current_position[X_AXIS], current_position[Y_AXIS], current_position[Z_AXIS], current_position[E_AXIS]);
-
-    char buffer[32];
-    sprintf_P(buffer, PSTR("G1 F%i Z5"), int(homing_feedrate[Z_AXIS]));
-    enquecommand(buffer);
-    sprintf_P(buffer, PSTR("G1 F%i X%i Y%i"), int(homing_feedrate[X_AXIS]), BED_LEFT_ADJUST_X, BED_LEFT_ADJUST_Y);
-    enquecommand(buffer);
-    sprintf_P(buffer, PSTR("G1 F%i Z0"), int(homing_feedrate[Z_AXIS]));
-    enquecommand(buffer);
-	parkHeadForRightAdjustment();
-}
-
-static void lcd_menu_first_run_bed_level_center_adjust()
-{
-	//still need to fix this one
-	parkHeadForLeftAdjustment();
-}
-
-static void homeAndParkHeadForCenterAdjustment2()
-{
-    //add_homeing[Z_AXIS] = 0;
-    enquecommand_P(PSTR("G28 Z0 X0 Y0"));
-    char buffer[32];
-    sprintf_P(buffer, PSTR("G1 F%i Z%i X%i Y%i"), int(homing_feedrate[0]), 35, X_MAX_LENGTH/2, BED_CENTER_ADJUST_Y);
-    enquecommand(buffer);
-	parkHeadForLeftAdjustment(); //temporary for testing only
-	//lcd_menu_first_run_bed_level_center_adjust();
-}
-
-static void homeAndParkHeadForCenterAdjustment()
-{
-    enquecommand_P(PSTR("G28 X0 Y0"));
-    char buffer[32];
-    sprintf_P(buffer, PSTR("G1 F%i Z%i X%i Y%i"), int(homing_feedrate[0]), 35, BED_CENTER_ADJUST_X, BED_CENTER_ADJUST_Y);
-    enquecommand(buffer);
-	homeAndParkHeadForCenterAdjustment2();
-}
+// 3 Point Bed Adjustment Routine
 
 static void bed_leveling()
 {
@@ -685,48 +626,73 @@ static void bed_leveling()
 	enquecommand_P(PSTR("G28 X0 Y0"));
     enquecommand_P(PSTR("G29"));
 #else	
-    enquecommand_P(PSTR("G28 Z0"));
-    char buffer[32];
-    sprintf_P(buffer, PSTR("G1 F%i Z%i"), int(homing_feedrate[0]), 35);
-    enquecommand(buffer);
-	homeAndParkHeadForCenterAdjustment();
+    enquecommand_P(PSTR("G28")); //home all axes
+	menu_action_submenu(point1BedAdjustment);
 #endif
 }
 
-static void bed_leveling_old()
+static void point1BedAdjustment()
 {
-	
-enquecommand_P(PSTR("G21"));
-enquecommand_P(PSTR("G90"));
-enquecommand_P(PSTR("M107"));
-enquecommand_P(PSTR("G28 X0 Y0"));
-enquecommand_P(PSTR("G1 X42 Y15 F9000"));
-enquecommand_P(PSTR("G28 Z0"));
-enquecommand_P(PSTR("M0"));
-enquecommand_P(PSTR("G1 Z5.0 F180"));
-enquecommand_P(PSTR("G1 X148 Y15 F9000"));
-enquecommand_P(PSTR("G1 Z0.0 F180"));
-enquecommand_P(PSTR("M0"));
-enquecommand_P(PSTR("G1 Z5.0 F180"));
-enquecommand_P(PSTR("G1 X95 Y180 F9000"));
-enquecommand_P(PSTR("G1 Z0.0 F180"));
-enquecommand_P(PSTR("M0"));
-enquecommand_P(PSTR("G00 Z10.0 F180"));
-enquecommand_P(PSTR("G1 X15 Y15 F9000"));
-enquecommand_P(PSTR("G1 Z0.0 F180"));
-enquecommand_P(PSTR("M0"));
-enquecommand_P(PSTR("G1 Z5.0 F180"));
-enquecommand_P(PSTR("G1 X175 Y15 F9000"));
-enquecommand_P(PSTR("G1 Z0.0 F180"));
-enquecommand_P(PSTR("M0"));
-enquecommand_P(PSTR("G1 Z5.0 F180"));
-enquecommand_P(PSTR("G1 X95 Y97.5 F9000"));
-enquecommand_P(PSTR("G1 Z0.0 F180"));
-enquecommand_P(PSTR("M0"));
-enquecommand_P(PSTR("G00 Z10.0 F180"));
-enquecommand_P(PSTR("G28 X0 Y0 F9000"));	
-
+    enquecommand_P(PSTR("G1 Z0")); // Move to Z to 15 
+    lcd_implementation_draw_line(0, PSTR("Adjust bed screws"));
+    lcd_implementation_draw_line(1, PSTR("ultil the bed touches"));
+    lcd_implementation_draw_line(2, PSTR("the nozzle in point 1"));
+    lcd_implementation_draw_line(3, PSTR("- Push to continue -"));
+    // wait for Click to continue
+    if (LCD_CLICKED)
+    {
+        // clean screen to continue
+          lcd_implementation_draw_line(0, PSTR(""));
+          lcd_implementation_draw_line(1, PSTR(""));
+          lcd_implementation_draw_line(2, PSTR(""));
+          lcd_implementation_draw_line(3, PSTR(""));
+		  enquecommand_P(PSTR("G1 Z15")); //raise Z by 15 mm
+		  enquecommand_P(PSTR("G1 F3000 X90 Y180")); //move to bed leveling point 2
+          lcd_quick_feedback();
+          menu_action_submenu(point2BedAdjustment);  //go to next leveling point routine
+    }
 }
+
+static void point2BedAdjustment()
+{
+    enquecommand_P(PSTR("G1 Z0")); // Move to Z to 0
+    lcd_implementation_draw_line(0, PSTR("Adjust bed screws"));
+    lcd_implementation_draw_line(1, PSTR("ultil the bed touches"));
+    lcd_implementation_draw_line(2, PSTR("the nozzle in point 2"));
+    lcd_implementation_draw_line(3, PSTR("- Push to continue -"));
+    // wait for Click to continue
+    if (LCD_CLICKED)
+    {
+        // clean screen to continue
+          lcd_implementation_draw_line(0, PSTR(""));
+          lcd_implementation_draw_line(1, PSTR(""));
+          lcd_implementation_draw_line(2, PSTR(""));
+          lcd_implementation_draw_line(3, PSTR(""));
+		  enquecommand_P(PSTR("G1 Z15")); //raise Z by 15 mm
+		  enquecommand_P(PSTR("G1 F3000 X180 Y20")); //move to bed leveling point 3
+          lcd_quick_feedback();
+          menu_action_submenu(point3BedAdjustment);  //go to next leveling point routine
+    }
+}
+
+static void point3BedAdjustment()
+{
+    enquecommand_P(PSTR("G1 Z0")); // Move to Z to 0
+    lcd_implementation_draw_line(0, PSTR("Adjust bed screws"));
+    lcd_implementation_draw_line(1, PSTR("ultil the bed touches"));
+    lcd_implementation_draw_line(2, PSTR("the nozzle in point 3"));
+    lcd_implementation_draw_line(3, PSTR("- Push to continue -"));
+    // wait for Click to continue
+    if (LCD_CLICKED)
+    {
+        enquecommand_P(PSTR("G28")); //home all axes
+        // return to the previous menu
+        lcd_quick_feedback();
+        currentMenu = lcd_prepare_menu;
+    }
+}
+
+// END of 3 Point Bed Adjustment Routine
 
 #ifdef UMO_BOTTOM_Z_STOP_MOD
 /* OFFSET BED ALIGN */
@@ -792,7 +758,7 @@ static void lcd_prepare_adjust_z()
         encoderPosition = 0;
     }
 }
-#endif
+#endif /* END OFFSET BED ALIGN */
 
 
 static void lcd_prepare_menu()
@@ -804,7 +770,6 @@ static void lcd_prepare_menu()
       MENU_ITEM(function, MSG_AUTOSTART, lcd_autostart_sd);
     #endif
 #endif
-	MENU_ITEM(function, MSG_BED_LEVEL, bed_leveling);
     MENU_ITEM(function, MSG_LASER_HOME, laser_home);
 	MENU_ITEM(gcode, MSG_LASER_XYHOME, PSTR("G28 X0 Y0"));
     MENU_ITEM(gcode, MSG_DISABLE_STEPPERS, PSTR("M84"));
@@ -837,6 +802,7 @@ static void lcd_prepare_menu()
 #ifdef UMO_BOTTOM_Z_STOP_MOD
 	MENU_ITEM(submenu, MSG_REALIGN_Z_OFFSET, lcd_init_z_adjustment);
 #endif
+	MENU_ITEM(submenu, MSG_BED_LEVEL, bed_leveling);
     END_MENU();
 
 }
