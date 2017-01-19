@@ -8,13 +8,6 @@
 #include "stepper.h"
 #include "ConfigurationStore.h"
 
-#define BED_CENTER_ADJUST_X (X_MAX_POS/2)
-#define BED_CENTER_ADJUST_Y ((int)Y_MAX_LENGTH - 10)
-#define BED_LEFT_ADJUST_X 10
-#define BED_LEFT_ADJUST_Y 20
-#define BED_RIGHT_ADJUST_X (X_MAX_POS - 10)
-#define BED_RIGHT_ADJUST_Y 20
-
 int8_t encoderDiff; /* encoderDiff is updated from interrupt context and added to encoderPosition every LCD update */
 
 /* Configuration settings */
