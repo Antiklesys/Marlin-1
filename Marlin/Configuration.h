@@ -227,11 +227,14 @@
   #define PID_dT ((OVERSAMPLENR * 8.0)/(F_CPU / 64.0 / 256.0)) //sampling period of the temperature routine
 
 // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
+//E3D V6 Nozzle Antiklesys
+    #define  DEFAULT_Kp 19.13
+    #define  DEFAULT_Ki 1.31
+    #define  DEFAULT_Kd 69.90
 // Ultimaker
-    #define  DEFAULT_Kp 22.2
-    #define  DEFAULT_Ki 1.08
-    #define  DEFAULT_Kd 114
-
+//    #define  DEFAULT_Kp 22.2
+//    #define  DEFAULT_Ki 1.08
+//    #define  DEFAULT_Kd 114
 // MakerGear
 //    #define  DEFAULT_Kp 7.0
 //    #define  DEFAULT_Ki 0.1
@@ -277,9 +280,14 @@
 //    #define  DEFAULT_bedKd 1675.16
 
 //Ultimaker2
-    #define  DEFAULT_bedKp 124.55
-    #define  DEFAULT_bedKi 23.46
-    #define  DEFAULT_bedKd 165.29
+//   #define  DEFAULT_bedKp 124.55
+//    #define  DEFAULT_bedKi 23.46
+//    #define  DEFAULT_bedKd 165.29
+
+//Custom Antiklesys
+    #define  DEFAULT_bedKp 323.20
+    #define  DEFAULT_bedKi 54.72
+    #define  DEFAULT_bedKd 477.25
 
 // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 #endif // PIDTEMPBED
