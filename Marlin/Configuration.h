@@ -387,9 +387,9 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 #define X_HOME_DIR -1
 #define Y_HOME_DIR -1
 
-#ifdef UMO_BOTTOM_Z_STOP_MOD
+#if defined(UMO_BOTTOM_Z_STOP_MOD) && ! defined(ENABLE_AUTO_BED_LEVELING)
 	#define Z_HOME_DIR 1
-	#define LCD_TIMEOUT_TO_STATUS 70000
+	#define LCD_TIMEOUT_TO_STATUS 120000
 #else
 	#define Z_HOME_DIR -1
 #endif
