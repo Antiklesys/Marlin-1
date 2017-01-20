@@ -589,8 +589,14 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 #define XY_STEPS 78.7402
 #endif
 
+#define E3D_TITAN_EXTRUDER //Uncomment to define E3D Titan Extruder : http://wiki.e3d-online.com/wiki/Titan_Assembly#Firmware_Calibration
+
 #ifdef ULTIMAKER_HBK
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {XY_STEPS,XY_STEPS,200.0,760*1.1}  // default steps per unit for Ultimaker
+#ifdef E3D_TITAN_EXTRUDER
+	#define DEFAULT_AXIS_STEPS_PER_UNIT   {XY_STEPS,XY_STEPS,200.0,418.5}  // default steps per unit for Ultimaker with Titan 
+#else
+	#define DEFAULT_AXIS_STEPS_PER_UNIT   {XY_STEPS,XY_STEPS,200.0,760*1.1}  // default steps per unit for Ultimaker
+#endif
 #define DEFAULT_MAX_FEEDRATE          {500, 500, 30, 25}    // (mm/sec)
 #else
 #define DEFAULT_AXIS_STEPS_PER_UNIT   {XY_STEPS,XY_STEPS,200.0*8/3,760*1.1}  // default steps per unit for Ultimaker
