@@ -227,14 +227,16 @@
   #define PID_dT ((OVERSAMPLENR * 8.0)/(F_CPU / 64.0 / 256.0)) //sampling period of the temperature routine
 
 // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
-//E3D V6 Nozzle Antiklesys
+//E3D V6 Nozzle Antiklesys 
+/*
     #define  DEFAULT_Kp 19.13
     #define  DEFAULT_Ki 1.31
     #define  DEFAULT_Kd 69.90
+*/
 // Ultimaker
-//    #define  DEFAULT_Kp 22.2
-//    #define  DEFAULT_Ki 1.08
-//    #define  DEFAULT_Kd 114
+    #define  DEFAULT_Kp 22.2
+    #define  DEFAULT_Ki 1.08
+    #define  DEFAULT_Kd 114
 // MakerGear
 //    #define  DEFAULT_Kp 7.0
 //    #define  DEFAULT_Ki 0.1
@@ -389,7 +391,6 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 
 #if defined(UMO_BOTTOM_Z_STOP_MOD) && ! defined(ENABLE_AUTO_BED_LEVELING)
 	#define Z_HOME_DIR 1
-	#define LCD_TIMEOUT_TO_STATUS 120000
 #else
 	#define Z_HOME_DIR -1
 #endif
@@ -595,7 +596,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 #ifdef E3D_TITAN_EXTRUDER
 	#define DEFAULT_AXIS_STEPS_PER_UNIT   {XY_STEPS,XY_STEPS,200.0,418.5}  // default steps per unit for Ultimaker with Titan 
 #else
-	#define DEFAULT_AXIS_STEPS_PER_UNIT   {XY_STEPS,XY_STEPS,200.0,760*1.1}  // default steps per unit for Ultimaker
+	#define DEFAULT_AXIS_STEPS_PER_UNIT   {XY_STEPS,XY_STEPS,200.0,760*1.1}  // default steps per unit for Ultimaker with HBK leadscrew
 #endif
 #define DEFAULT_MAX_FEEDRATE          {500, 500, 30, 25}    // (mm/sec)
 #else

@@ -188,6 +188,7 @@
 	#define MSG_POSITION_UNKNOWN "Home X/Y before Z"
 	#define MSG_ZPROBE_ZOFFSET "Z Offset"
 	#define MSG_ZBED_ADJUSTMENT "Z Adjust"
+	#define MSG_LASER_Z_OFFSET "Laser Z"
 	#define MSG_BABYSTEP_X "Babystep X"
 	#define MSG_BABYSTEP_Y "Babystep Y"
 	#define MSG_BABYSTEP_Z "Babystep Z"
