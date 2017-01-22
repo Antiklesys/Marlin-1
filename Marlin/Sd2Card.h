@@ -222,12 +222,6 @@ class Sd2Card {
   bool writeStart(uint32_t blockNumber, uint32_t eraseCount);
   bool writeStop();
   
-  // Toshiba FlashAir support
-  uint8_t readExtMemory(uint8_t mio, uint8_t func, uint32_t addr, uint16_t count, uint8_t* dst);
-
-  void setFlashAirCompatible(bool flashAirCompatible) { flash_air_compatible_ = flashAirCompatible; }
-  bool getFlashAirCompatible() const { return flash_air_compatible_; }
-  
  private:
   //----------------------------------------------------------------------------
   uint8_t chipSelectPin_;
@@ -252,9 +246,6 @@ class Sd2Card {
   bool writeData(uint8_t token, const uint8_t* src);
   
   
-  // Toshiba FlashAir support
-  uint8_t waitStartBlock(void);
-  uint8_t readExt(uint32_t arg, uint8_t* dst, uint16_t count);
 };
 #endif  // Sd2Card_h
 
