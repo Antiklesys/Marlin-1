@@ -1108,10 +1108,10 @@ static void lcd_control_motion_menu()
     START_MENU();
     MENU_ITEM(back, MSG_CONTROL, lcd_control_menu);
 #ifdef ENABLE_AUTO_BED_LEVELING
-    MENU_ITEM_EDIT(float32, MSG_ZPROBE_ZOFFSET, &zprobe_zoffset, 0.5, 50);
+    MENU_ITEM_EDIT(float32, MSG_ZPROBE_ZOFFSET, &zprobe_zoffset, -10, 10);
 #endif
 #ifdef UMO_BOTTOM_Z_STOP_MOD
-		MENU_ITEM_EDIT(float32, MSG_ZBED_ADJUSTMENT, &add_homeing[Z_AXIS], 10, 30);
+		MENU_ITEM_EDIT(float32, MSG_ZBED_ADJUSTMENT, &add_homeing[Z_AXIS], -30, -0.5);
 #endif
 	MENU_ITEM_EDIT(int3, MSG_LASER_Z_OFFSET, &laser_offset, 60,110);
     MENU_ITEM_EDIT(float5, MSG_ACC, &acceleration, 500, 99000);
@@ -1309,15 +1309,15 @@ static void lcd_action_menu()
 #define menu_edit_type(_type, _name, _strFunc, scale) \
     void menu_edit_ ## _name () \
     { \
-        if ((int32_t)encoderPosition < minEditValue) \
-            encoderPosition = minEditValue; \
+        if ((int32_t)encoderPosition < 0) \
+             encoderPosition = 0; \
         if ((int32_t)encoderPosition > maxEditValue) \
             encoderPosition = maxEditValue; \
         if (lcdDrawUpdate) \
-            lcd_implementation_drawedit(editLabel, _strFunc(((_type)encoderPosition) / scale)); \
+            lcd_implementation_drawedit(editLabel, _strFunc(((_type)((int32_t)encoderPosition + minEditValue)) * (1.0 / scale))); \
         if (LCD_CLICKED) \
         { \
-            *((_type*)editValue) = ((_type)encoderPosition) / scale; \
+            *((_type*)editValue) = ((_type)((int32_t)encoderPosition + minEditValue)) * (1.0 / scale); \
             lcd_quick_feedback(); \
             currentMenu = prevMenu; \
             encoderPosition = prevEncoderPosition; \
@@ -1325,15 +1325,15 @@ static void lcd_action_menu()
     } \
     void menu_edit_callback_ ## _name () \
     { \
-        if ((int32_t)encoderPosition < minEditValue) \
-            encoderPosition = minEditValue; \
+        if ((int32_t)encoderPosition < 0) \
+             encoderPosition = 0; \
         if ((int32_t)encoderPosition > maxEditValue) \
             encoderPosition = maxEditValue; \
         if (lcdDrawUpdate) \
-            lcd_implementation_drawedit(editLabel, _strFunc(((_type)encoderPosition) / scale)); \
+            lcd_implementation_drawedit(editLabel, _strFunc(((_type)((int32_t)encoderPosition + minEditValue)) * (1.0 / scale))); \
         if (LCD_CLICKED) \
         { \
-            *((_type*)editValue) = ((_type)encoderPosition) / scale; \
+            *((_type*)editValue) = ((_type)((int32_t)encoderPosition + minEditValue)) * (1.0 / scale); \
             lcd_quick_feedback(); \
             currentMenu = prevMenu; \
             encoderPosition = prevEncoderPosition; \
@@ -1351,8 +1351,8 @@ static void lcd_action_menu()
         editLabel = pstr; \
         editValue = ptr; \
         minEditValue = minValue * scale; \
-        maxEditValue = maxValue * scale; \
-        encoderPosition = (*ptr) * scale; \
+        maxEditValue = maxValue * scale - minEditValue; \
+        encoderPosition = (*ptr) * scale - minEditValue; \
     }\
     static void menu_action_setting_edit_callback_ ## _name (const char* pstr, _type* ptr, _type minValue, _type maxValue, menuFunc_t callback) \
     { \
@@ -1365,17 +1365,17 @@ static void lcd_action_menu()
         editLabel = pstr; \
         editValue = ptr; \
         minEditValue = minValue * scale; \
-        maxEditValue = maxValue * scale; \
-        encoderPosition = (*ptr) * scale; \
+        maxEditValue = maxValue * scale - minEditValue; \
+        encoderPosition = (*ptr) * scale - minEditValue; \
         callbackFunc = callback;\
     }
 menu_edit_type(int, int3, itostr3, 1)
 menu_edit_type(int, int4, itostr4, 0.1)
-menu_edit_type(float, float3, ftostr3, 1)
-menu_edit_type(float, float32, ftostr32, 100)
+menu_edit_type(float, float3, ftostr3, 1.0)
+menu_edit_type(float, float32, ftostr32, 100.0)
 menu_edit_type(float, float5, ftostr5, 0.01)
-menu_edit_type(float, float51, ftostr51, 10)
-menu_edit_type(float, float52, ftostr52, 100)
+menu_edit_type(float, float51, ftostr51, 10.0)
+menu_edit_type(float, float52, ftostr52, 100.0)
 menu_edit_type(unsigned long, long5, ftostr5, 0.01)
 
 #ifdef REPRAPWORLD_KEYPAD
@@ -1489,7 +1489,7 @@ void lcd_init()
   #ifdef SR_LCD_2W_NL // Non latching 2 wire shift register
      pinMode (SR_DATA_PIN, OUTPUT);
      pinMode (SR_CLK_PIN, OUTPUT);
-  #elif defined(SHIFT_CLK) 
+  #elif defined(SHIFT_CLK)
      pinMode(SHIFT_CLK,OUTPUT);
      pinMode(SHIFT_LD,OUTPUT);
      pinMode(SHIFT_EN,OUTPUT);
