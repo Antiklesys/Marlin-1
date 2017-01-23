@@ -619,13 +619,8 @@ static void laser_home()
 
 static void bed_leveling()
 {
-#ifdef ENABLE_AUTO_BED_LEVELING
-	enquecommand_P(PSTR("G28 X0 Y0"));
-    enquecommand_P(PSTR("G29"));
-#else	
     enquecommand_P(PSTR("G28")); //home all axes
 	menu_action_submenu(point1BedAdjustment);
-#endif
 }
 
 static void point1BedAdjustment()
