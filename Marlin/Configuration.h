@@ -575,7 +575,11 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 //// MOVEMENT SETTINGS
 #define NUM_AXIS 4 // The axis order in all axis related arrays is X, Y, Z, E
 #ifdef ULTIMAKER_HBK
-#define HOMING_FEEDRATE {50*60, 50*60, 30*60, 0}  // set the homing speeds (mm/min)
+	#ifdef ENABLE_AUTO_BED_LEVELING
+		#define HOMING_FEEDRATE {50*60, 50*60, 10*60, 0}  // set the homing speeds (mm/min)
+	#else
+		#define HOMING_FEEDRATE {50*60, 50*60, 30*60, 0}  // set the homing speeds (mm/min)
+	#endif
 #else
 #define HOMING_FEEDRATE {50*60, 50*60, 4*60, 0}  // set the homing speeds (mm/min)
 #endif
