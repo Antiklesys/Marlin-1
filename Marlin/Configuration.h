@@ -627,6 +627,8 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 //=============================Additional Features===========================
 //===========================================================================
 
+#define LASER_SUPPORT  //Uncomment to enable laser-head support such as el-cheapo and similar ones
+
 // Custom M code points
 #define CUSTOM_M_CODES
 #ifdef CUSTOM_M_CODES

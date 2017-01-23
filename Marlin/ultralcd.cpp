@@ -604,6 +604,7 @@ static void lcd_home()
 }
 #endif
 
+#ifdef LASER_SUPPORT  //laser head homing routine
 static void laser_home()
 {
     enquecommand_P(PSTR("G28 X0 Y0"));
@@ -612,6 +613,7 @@ static void laser_home()
 	sprintf_P(buffer,PSTR("G1 Z%i F12000"), laser_offset);
 	enquecommand(buffer);
 }
+#endif
 
 // 3 Point Bed Adjustment Routine
 
@@ -772,8 +774,10 @@ static void lcd_prepare_menu()
 #else
     MENU_ITEM(gcode, MSG_AUTO_HOME, PSTR("G28"));
 #endif
+#ifdef LASER_SUPPORT
     MENU_ITEM(function, MSG_LASER_HOME, laser_home);
 	MENU_ITEM(gcode, MSG_LASER_XYHOME, PSTR("G28 X0 Y0"));
+#endif
     //MENU_ITEM(gcode, MSG_SET_ORIGIN, PSTR("G92 X0 Y0 Z0"));
 #if TEMP_SENSOR_0 != 0
   #if TEMP_SENSOR_1 != 0 || TEMP_SENSOR_2 != 0 || TEMP_SENSOR_BED != 0
@@ -1113,7 +1117,9 @@ static void lcd_control_motion_menu()
 #ifdef UMO_BOTTOM_Z_STOP_MOD
 		MENU_ITEM_EDIT(float32, MSG_ZBED_ADJUSTMENT, &add_homeing[Z_AXIS], -30, -0.5);
 #endif
-	MENU_ITEM_EDIT(int3, MSG_LASER_Z_OFFSET, &laser_offset, 60,110);
+	#ifdef LASER_SUPPORT
+		MENU_ITEM_EDIT(int3, MSG_LASER_Z_OFFSET, &laser_offset, 60,110);
+	#endif
     MENU_ITEM_EDIT(float5, MSG_ACC, &acceleration, 500, 99000);
     MENU_ITEM_EDIT(float3, MSG_VXY_JERK, &max_xy_jerk, 1, 990);
     MENU_ITEM_EDIT(float52, MSG_VZ_JERK, &max_z_jerk, 0.1, 990);
