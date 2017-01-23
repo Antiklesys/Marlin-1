@@ -386,6 +386,8 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 
 #define UMO_BOTTOM_Z_STOP_MOD
 
+//#define ENABLE_AUTO_BED_LEVELING // Delete the comment to enable (remove // at the start of the line)
+
 #define X_HOME_DIR -1
 #define Y_HOME_DIR -1
 
@@ -449,8 +451,6 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 #define FLASH_AIR_WIFI // Uncomment this if Toshiba FlashAir WiFi is used.
 
 //============================= Bed Auto Leveling ===========================
-
-//#define ENABLE_AUTO_BED_LEVELING // Delete the comment to enable (remove // at the start of the line)
 
 #ifdef ENABLE_AUTO_BED_LEVELING
 
