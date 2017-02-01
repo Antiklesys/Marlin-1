@@ -426,6 +426,8 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 #define Y_MAX_LENGTH (Y_MAX_POS - Y_MIN_POS)
 #define Z_MAX_LENGTH (Z_MAX_POS - Z_MIN_POS)
 
+//#define BEEP_DURING_FILAMENT_CHANGE //Uncomment to enable an annoying beeper during the filament change command
+  
 //===========================================================================
 //========================= Filament Runout Sensor ==========================
 //===========================================================================
@@ -439,9 +441,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
     const bool FIL_RUNOUT_INVERTING = true;  // Should be uncommented and true or false should assigned
   #else
     const bool FIL_RUNOUT_INVERTING = false;  // Should be uncommented and true or false should assigned
-  #endif
-  //#define BEEP_DURING_FILAMENT_CHANGE //Uncomment to enable an annoying beeper during the filament change command
-  
+  #endif  
   //#define ENDSTOPPULLUP_FIL_RUNOUT // Uncomment to use internal pullup for filament runout pins if the sensor is defined.
   #define FILAMENT_RUNOUT_SCRIPT "M600"
 #endif
