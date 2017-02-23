@@ -600,7 +600,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 
 #ifdef ULTIMAKER_HBK
 #ifdef E3D_TITAN_EXTRUDER
-	#define DEFAULT_AXIS_STEPS_PER_UNIT   {XY_STEPS,XY_STEPS,200.0,418.5}  // default steps per unit for Ultimaker with Titan 
+	#define DEFAULT_AXIS_STEPS_PER_UNIT   {XY_STEPS,XY_STEPS,200.0,418.5}  // default steps per unit for Ultimaker with Titan & HBK leadscrew
 #else
 	#define DEFAULT_AXIS_STEPS_PER_UNIT   {XY_STEPS,XY_STEPS,200.0,760*1.1}  // default steps per unit for Ultimaker with HBK leadscrew
 #endif
